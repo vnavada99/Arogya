@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class getMyUser extends AppCompatActivity {
-    private TextView myUser,bloodGrp,displayMsg;
+    private TextView myUser,bloodGrp,displayMsg,hosLoc,hosName,docName,rbcCount;
     FirebaseAuth myFirebaseAuth;
     DatabaseReference myRef;
     @Override
@@ -25,18 +25,31 @@ public class getMyUser extends AppCompatActivity {
 
         myUser = findViewById(R.id.myUser);
         bloodGrp = findViewById(R.id.bloodGrp);
+        hosLoc = findViewById(R.id.hosLoc);
+        hosName = findViewById(R.id.hosName);
+        docName = findViewById(R.id.docName);
+        rbcCount = findViewById(R.id.rbcCount);
         myFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
         displayMsg = findViewById(R.id.displayMsg);
-        displayMsg.setText("Welcome "+myFirebaseUser.getEmail().toString()+", your medical details are");
+
         myRef = FirebaseDatabase.getInstance().getReference().child("users").child(myFirebaseUser.getUid().toString());
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("name").getValue().toString();
                 String bg = snapshot.child("bloodGrp").getValue().toString();
+                String docN = snapshot.child("docName").getValue().toString();
+                String hosL = snapshot.child("hosLoc").getValue().toString();
+                String hosN = snapshot.child("hosName").getValue().toString();
+                String rbcC = snapshot.child("rbcCount").getValue().toString();
                 myUser.setText(name);
                 bloodGrp.setText(bg);
+                hosLoc.setText(hosL);
+                hosName.setText(hosN);
+                docName.setText(docN);
+                rbcCount.setText(rbcC);
+                displayMsg.setText("Welcome "+snapshot.child("name").getValue().toString()+", your medical details are");
             }
 
             @Override

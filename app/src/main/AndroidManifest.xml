@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/hospital"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".getMyUser"></activity>
+        <activity android:name=".callDoc"></activity>
+        <activity android:name=".getMyUser" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
